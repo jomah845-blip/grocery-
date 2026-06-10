@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FreshFind – US Grocery Store Locator</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="#" class="logo">
+        <span class="logo-icon">🛒</span>
+        <span class="logo-text">FreshFind</span>
+      </a>
+      <nav class="nav">
+        <a href="#map-section">Map</a>
+        <a href="#chains-section">Store Chains</a>
+        <a href="#about-section">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-eyebrow">Authentic US Grocery Locator</p>
+      <h1 class="hero-title">Find Fresh Food<br /><em>Near You</em></h1>
+      <p class="hero-sub">Search over 50,000 grocery stores across all 50 states — from national chains to beloved local markets.</p>
+      <div class="search-bar" id="search-bar">
+        <input
+          id="location-input"
+          type="text"
+          placeholder="Enter city, ZIP code, or address…"
+          autocomplete="off"
+        />
+        <button id="search-btn" class="btn-primary">Search</button>
+        <button id="geolocate-btn" class="btn-secondary" title="Use my location">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
+            <path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/>
+          </svg>
+          Use my location
+        </button>
+      </div>
+      <div id="search-error" class="search-error hidden"></div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="produce-grid">
+        <span>🥦</span><span>🍎</span><span>🥕</span>
+        <span>🍋</span><span>🧅</span><span>🍇</span>
+        <span>🥬</span><span>🍓</span><span>🧄</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter Bar -->
+  <section class="filter-bar-section" id="filter-bar-section">
+    <div class="filter-bar">
+      <span class="filter-label">Filter by chain:</span>
+      <div class="filter-chips" id="filter-chips">
+        <button class="chip active" data-chain="all">All Stores</button>
+        <button class="chip" data-chain="walmart">Walmart</button>
+        <button class="chip" data-chain="kroger">Kroger</button>
+        <button class="chip" data-chain="wholeFoods">Whole Foods</button>
+        <button class="chip" data-chain="target">Target</button>
+        <button class="chip" data-chain="publix">Publix</button>
+        <button class="chip" data-chain="aldi">ALDI</button>
+        <button class="chip" data-chain="traderjoes">Trader Joe's</button>
+        <button class="chip" data-chain="costco">Costco</button>
+        <button class="chip" data-chain="safeway">Safeway</button>
+        <button class="chip" data-chain="other">Independent</button>
+      </div>
+      <div class="radius-select">
+        <label for="radius">Within:</label>
+        <select id="radius">
+          <option value="5">5 miles</option>
+          <option value="10" selected>10 miles</option>
+          <option value="25">25 miles</option>
+          <option value="50">50 miles</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- Map + Results -->
+  <section class="map-section" id="map-section">
+    <div class="map-pane">
+      <div id="map-placeholder" class="map-placeholder">
+        <div class="map-placeholder-inner">
+          <div class="map-pin-icon">📍</div>
+          <p>Enter a location above to see stores on the map</p>
+          <p class="map-sub">Results use the Google Maps Places API</p>
+        </div>
+      </div>
+      <div id="map" class="map-frame hidden"></div>
+    </div>
+    <div class="results-pane" id="results-pane">
+      <div class="results-header">
+        <h2 id="results-title">Stores Near You</h2>
+        <span id="results-count" class="results-count"></span>
+      </div>
+      <ul class="store-list" id="store-list">
+        <li class="store-list-empty" id="store-list-empty">
+          Search a location to discover grocery stores nearby.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Popular Chains -->
+  <section class="chains-section" id="chains-section">
+    <div class="section-inner">
+      <h2 class="section-title">Major US Grocery Chains</h2>
+      <p class="section-sub">Browse the largest grocery retailers in the country</p>
+      <div class="chains-grid" id="chains-grid"></div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="about-section" id="about-section">
+    <div class="section-inner about-inner">
+      <div class="about-text">
+        <h2 class="section-title">About FreshFind</h2>
+        <p>FreshFind helps Americans find authentic grocery stores — whether you're new to a city, road-tripping across the country, or looking for a specific chain in your area.</p>
+        <p>Our data is powered by Google Maps Places API, ensuring real-time accuracy for store locations, hours, and ratings. We cover all 50 states and over 50,000 grocery locations nationwide.</p>
+        <div class="stats-row">
+          <div class="stat"><span class="stat-num">50</span><span class="stat-label">States</span></div>
+          <div class="stat"><span class="stat-num">50K+</span><span class="stat-label">Stores</span></div>
+          <div class="stat"><span class="stat-num">200+</span><span class="stat-label">Chains</span></div>
+        </div>
+      </div>
+      <div class="about-setup">
+        <h3>Setup Instructions</h3>
+        <ol>
+          <li>Get a <strong>Google Maps JavaScript API key</strong> from <a href="https://console.cloud.google.com" target="_blank" rel="noopener">Google Cloud Console</a></li>
+          <li>Enable <strong>Maps JavaScript API</strong> and <strong>Places API</strong></li>
+          <li>Add your key to <code>config.js</code> (see repo README)</li>
+          <li>Deploy to any static host or open <code>index.html</code> locally</li>
+        </ol>
+        <a href="https://github.com" class="btn-outline" target="_blank">View on GitHub →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span class="logo-text">🛒 FreshFind</span>
+      <span>Data via Google Maps Places API · Built for the US</span>
+      <span>© 2025 FreshFind</span>
+    </div>
+  </footer>
+
+  <!-- Google Maps API (key injected from config.js) -->
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
